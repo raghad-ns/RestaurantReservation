@@ -1,7 +1,10 @@
-﻿namespace RestaurantReservation.Db.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RestaurantReservation.Db.Models;
 
 public class Order
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Configures as an identity column
     public int Id { get; set; }
     public Reservation Reservation { get; set; } // Navigation property
     public int ReservationId { get; set; } // Foreign key
