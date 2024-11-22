@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Migrations;
 using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Seeds;
 
@@ -23,6 +24,12 @@ public class RestaurantReservationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDbFunction(
+            typeof(RestaurantReservationDbContext)
+            .GetMethod(nameof(RestaurantRevenue), new[] { typeof(int) })
+            )
+        .HasName("RestaurantRevenue")
+        .HasSchema("dbo");
 
         modelBuilder
             .SeedRestaurants()
@@ -35,4 +42,5 @@ public class RestaurantReservationDbContext : DbContext
             .SeedOrderItems();
     }
 
+    public static double RestaurantRevenue(int restaurantId) => throw new System.NotImplementedException();
 }
