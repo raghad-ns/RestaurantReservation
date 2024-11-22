@@ -1,4 +1,6 @@
-﻿using RestaurantReservation.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Order;
 
@@ -30,5 +32,13 @@ public class OrderRepository
         Order = newOrder;
         _db.SaveChangesAsync();
         return Order;
+    }
+
+    public Task<List<Db.Models.Order>> ListOrdersAndMenuItems(int reservationId)
+    {
+        return _db.Order
+            .Include(order => order.Items)
+            .ThenInclude(orderItem => orderItem.Item)
+            .Where(order => order.ReservationId == reservationId).ToListAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using RestaurantReservation.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db;
 
 namespace RestaurantReservation.OrderItem;
 
@@ -30,5 +31,30 @@ public class OrderItemRepository
         OrderItem = newOrderItem;
         _db.SaveChangesAsync();
         return OrderItem;
+    }
+
+    public Task<double> CalculateAverageOrderAmountForEmployee(int employeeId)
+    {
+        return _db.Order
+            .Where(order => order.EmployeeId == employeeId)
+            .AverageAsync(order => order.TotalAmount);
+    } 
+
+    public async Task<List<Db.Models.MenuItem>> ListOrderedMenuItemsForReservation(int reservationId)
+    {
+        var orders = await _db.Order
+            .Where(order => order.ReservationId == reservationId)
+            .Include(order => order.Items)
+            .ThenInclude(orderItem => orderItem.Item)
+            .ToListAsync();
+
+        var items = new List<Db.Models.MenuItem>();
+
+        foreach (var order in orders)
+        {
+            items.AddRange(order.Items.Select(orderItem => orderItem.Item));
+        }
+
+        return items;
     }
 }

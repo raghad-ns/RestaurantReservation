@@ -12,4 +12,5 @@ public class Order
     public int EmployeeId { get; set; } // Foreign key
     public DateTime OrderDate { get; set; }
     public double TotalAmount { get; set; }
+    public ICollection<OrderItem> Items { get; set; }
 }

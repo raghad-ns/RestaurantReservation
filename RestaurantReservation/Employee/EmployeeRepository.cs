@@ -1,4 +1,5 @@
 ﻿using RestaurantReservation.Db;
+using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Employee;
 
@@ -30,5 +31,10 @@ public class EmployeeRepository
         Employee = newEmployee;
         _db.SaveChangesAsync();
         return Employee;
+    }
+
+    public async Task<List<Db.Models.Employee>> ListManagers()
+    {
+        return _db.Employee.Where(emp => emp.Position.Equals("Manager")).ToList();
     }
 }
