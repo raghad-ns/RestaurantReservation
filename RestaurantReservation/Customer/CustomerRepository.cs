@@ -1,12 +1,13 @@
-﻿using RestaurantReservation.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db;
 
 namespace RestaurantReservation.Customer;
 
-public class RestaurantRepository
+public class CustomerRepository
 {
     private readonly RestaurantReservationDbContext _db;
 
-    public RestaurantRepository(RestaurantReservationDbContext db)
+    public CustomerRepository(RestaurantReservationDbContext db)
     {
         _db = db;
     }
@@ -30,5 +31,10 @@ public class RestaurantRepository
         customer = newCustomer;
         _db.SaveChangesAsync();
         return customer;
+    }
+
+    public Task<List<Db.Models.Customer>> GetCustomersHaveReservationWithPartySizeGreaterThan(int partySize)
+    {
+        return _db.Customer.FromSqlInterpolated($"EXEC FindCustomersHaveReservationWithPartySizeGreaterThan {partySize}").ToListAsync();
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Customer;
 using RestaurantReservation.Db;
-using RestaurantReservation.Db.Models;
-using RestaurantReservation.Order;
 using RestaurantReservation.OrderItem;
-using System.Xml;
 
 namespace RestaurantReservation;
 
@@ -24,5 +22,12 @@ public class Program
             .Select(o => RestaurantReservationDbContext.RestaurantRevenue(1))
             .FirstOrDefaultAsync();
         Console.WriteLine(revenue);
+
+        var customerRepo = new CustomerRepository(new RestaurantReservationDbContext());
+        var customers = await customerRepo.GetCustomersHaveReservationWithPartySizeGreaterThan(1);
+        foreach (var customer in customers)
+        {
+            Console.WriteLine(customer.FirstName);
+        }
     }
 }
