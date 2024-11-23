@@ -1,4 +1,5 @@
-﻿using RestaurantReservation.Db;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db;
 using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Employee;
@@ -33,8 +34,13 @@ public class EmployeeRepository
         return Employee;
     }
 
-    public async Task<List<Db.Models.Employee>> ListManagers()
+    public Task<List<Db.Models.Employee>> ListManagers()
     {
-        return _db.Employee.Where(emp => emp.Position.Equals("Manager")).ToList();
+        return _db.Employee.Where(emp => emp.Position.Equals("Manager")).ToListAsync();
+    }
+
+    public Task<List<EmployeeRestaurantDetails>> GetEmployeeRestaurantDetails()
+    {
+        return _db.Set<EmployeeRestaurantDetails>().ToListAsync();
     }
 }

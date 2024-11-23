@@ -31,6 +31,12 @@ public class RestaurantReservationDbContext : DbContext
         .HasName("RestaurantRevenue")
         .HasSchema("dbo");
 
+        modelBuilder.Entity<EmployeeRestaurantDetails>(entity =>
+        {
+            entity.ToView("EmployeeRestaurantDetails");
+            entity.HasNoKey();
+        });
+
         modelBuilder
             .SeedRestaurants()
             .SeedCustomers()
