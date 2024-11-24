@@ -14,27 +14,28 @@ public class CustomerRepository
 
     public async Task<int> AddCustomer(Db.Models.Customer customer)
     {
-        _db.Customer.AddAsync(customer);
-        _db.SaveChangesAsync();
+        _db.Customer.Add(customer);
+        await _db.SaveChangesAsync();
         return customer.Id;
     }
 
     public async Task DeleteCustomer(Db.Models.Customer customer)
     {
         _db.Customer.Remove(customer);
-        _db.SaveChangesAsync();
+        await _db.SaveChangesAsync();
     }
 
-    public async Task<Db.Models.Customer> UpdateCustomer(int customerId,Db.Models.Customer newCustomer)
+    public async Task<Db.Models.Customer> UpdateCustomer(Db.Models.Customer newCustomer)
     {
-        var customer = await _db.Customer.FindAsync(customerId);
-        customer = newCustomer;
-        _db.SaveChangesAsync();
-        return customer;
+        _db.Customer.Update(newCustomer); // Will add new record if customer doesn't exist
+        await _db.SaveChangesAsync();
+        return newCustomer;
     }
 
     public Task<List<Db.Models.Customer>> GetCustomersHaveReservationWithPartySizeGreaterThan(int partySize)
     {
-        return _db.Customer.FromSqlInterpolated($"EXEC FindCustomersHaveReservationWithPartySizeGreaterThan {partySize}").ToListAsync();
+        return _db.Customer.
+            FromSqlInterpolated($"EXEC FindCustomersHaveReservationWithPartySizeGreaterThan {partySize}")
+            .ToListAsync();
     }
 }

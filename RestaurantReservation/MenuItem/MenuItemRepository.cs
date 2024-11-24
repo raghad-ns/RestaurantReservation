@@ -13,22 +13,21 @@ public class MenuItemRepository
 
     public async Task<int> AddMenuItem(Db.Models.MenuItem menuItem)
     {
-        _db.MenuItem.AddAsync(menuItem);
-        _db.SaveChangesAsync();
+        _db.MenuItem.Add(menuItem);
+        await _db.SaveChangesAsync();
         return menuItem.Id;
     }
 
     public async Task DeleteMenuItem(Db.Models.MenuItem menuItem)
     {
         _db.MenuItem.Remove(menuItem);
-        _db.SaveChangesAsync();
+        await _db.SaveChangesAsync();
     }
 
-    public async Task<Db.Models.MenuItem> UpdateMenuItem(int menuItemId,Db.Models.MenuItem newMenuItem)
+    public async Task<Db.Models.MenuItem> UpdateMenuItem(Db.Models.MenuItem newMenuItem)
     {
-        var MenuItem = await _db.MenuItem.FindAsync(menuItemId);
-        MenuItem = newMenuItem;
-        _db.SaveChangesAsync();
-        return MenuItem;
+        _db.MenuItem.Update(newMenuItem);
+        await _db.SaveChangesAsync();
+        return newMenuItem;
     }
 }

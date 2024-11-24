@@ -13,22 +13,21 @@ public class TableRepository
 
     public async Task<int> AddTable(Db.Models.Table table)
     {
-        _db.Table.AddAsync(table);
-        _db.SaveChangesAsync();
+        _db.Table.Add(table);
+        await _db.SaveChangesAsync();
         return table.Id;
     }
 
     public async Task DeleteTable(Db.Models.Table table)
     {
         _db.Table.Remove(table);
-        _db.SaveChangesAsync();
+        await _db.SaveChangesAsync();
     }
 
-    public async Task<Db.Models.Table> UpdateTable(int tableId,Db.Models.Table newTable)
+    public async Task<Db.Models.Table> UpdateTable(Db.Models.Table newTable)
     {
-        var Table = await _db.Table.FindAsync(tableId);
-        Table = newTable;
-        _db.SaveChangesAsync();
-        return Table;
+        _db.Table.Update(newTable);
+        await _db.SaveChangesAsync();
+        return newTable;
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Db.Migrations;
 using RestaurantReservation.Db.Models;
-using RestaurantReservation.Db.Seeds;
 
 namespace RestaurantReservation.Db;
 
@@ -13,6 +11,7 @@ public class RestaurantReservationDbContext : DbContext
     {
         _connectionString = connString;
     }
+
     public DbSet<Customer> Customer { get; set; }
     public DbSet<Employee> Employee { get; set; }
     public DbSet<MenuItem> MenuItem { get; set; }
@@ -21,6 +20,7 @@ public class RestaurantReservationDbContext : DbContext
     public DbSet<Reservation> Reservation { get; set; }
     public DbSet<Restaurant> Restaurant { get; set; }
     public DbSet<Table> Table { get; set; }
+    public DbSet<EmployeeRestaurantDetails> EmployeeRestaurantDetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
