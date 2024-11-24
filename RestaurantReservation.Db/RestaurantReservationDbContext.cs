@@ -7,7 +7,12 @@ namespace RestaurantReservation.Db;
 
 public class RestaurantReservationDbContext : DbContext
 {
-    private readonly string connString = @"Server=DESKTOP-33KIDRJ\SQLEXPRESS;Database=RestaurantReservationCore;Integrated Security=True; Encrypt=True; TrustServerCertificate=True;";
+    private readonly string _connectionString;
+
+    public RestaurantReservationDbContext( string  connString)
+    {
+        _connectionString = connString;
+    }
     public DbSet<Customer> Customer { get; set; }
     public DbSet<Employee> Employee { get; set; }
     public DbSet<MenuItem> MenuItem { get; set; }
@@ -19,7 +24,7 @@ public class RestaurantReservationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(connString);
+        optionsBuilder.UseSqlServer(_connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
