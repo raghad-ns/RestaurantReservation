@@ -41,16 +41,6 @@ public class RestaurantReservationDbContext : DbContext
             entity.ToView("EmployeeRestaurantDetails");
             entity.HasNoKey();
         });
-
-        modelBuilder
-            .SeedRestaurants()
-            .SeedCustomers()
-            .SeedEmployees()
-            .SeedMenuItems()
-            .SeedTables()
-            .SeedReservations()
-            .SeedOrders()
-            .SeedOrderItems();
     }
 
     public static double RestaurantRevenue(int restaurantId) => throw new System.NotImplementedException();
