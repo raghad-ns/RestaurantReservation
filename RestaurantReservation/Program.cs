@@ -1,13 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Customer;
 using RestaurantReservation.Db;
-using RestaurantReservation.OrderItem;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using RestaurantReservation.Configuration.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestaurantReservation.Configuration;
+using RestaurantReservation.Db.Repositories.OrderItem;
+using RestaurantReservation.Db.Repositories.Customer;
 
 namespace RestaurantReservation;
 
