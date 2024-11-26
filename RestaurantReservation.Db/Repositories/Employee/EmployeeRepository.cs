@@ -2,7 +2,7 @@
 using RestaurantReservation.Db;
 using RestaurantReservation.Db.Models;
 
-namespace RestaurantReservation.Employee;
+namespace RestaurantReservation.Db.Repositories.Employee;
 
 public class EmployeeRepository
 {
@@ -13,27 +13,27 @@ public class EmployeeRepository
         _db = db;
     }
 
-    public async Task<int> AddEmployee(Db.Models.Employee employee)
+    public async Task<int> AddEmployee(Models.Employee employee)
     {
         _db.Employee.Add(employee);
         await _db.SaveChangesAsync();
         return employee.Id;
     }
 
-    public async Task DeleteEmployee(Db.Models.Employee employee)
+    public async Task DeleteEmployee(Models.Employee employee)
     {
         _db.Employee.Remove(employee);
         await _db.SaveChangesAsync();
     }
 
-    public async Task<Db.Models.Employee> UpdateEmployee(Db.Models.Employee newEmployee)
+    public async Task<Models.Employee> UpdateEmployee(Models.Employee newEmployee)
     {
         _db.Employee.Update(newEmployee);
         await _db.SaveChangesAsync();
         return newEmployee;
     }
 
-    public Task<List<Db.Models.Employee>> ListManagers()
+    public Task<List<Models.Employee>> ListManagers()
     {
         return _db.Employee
             .Where(emp => emp.Position.Equals("Manager"))

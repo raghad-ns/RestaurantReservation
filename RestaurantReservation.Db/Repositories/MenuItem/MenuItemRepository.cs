@@ -1,6 +1,6 @@
 ﻿using RestaurantReservation.Db;
 
-namespace RestaurantReservation.MenuItem;
+namespace RestaurantReservation.Db.Repositories.MenuItem;
 
 public class MenuItemRepository
 {
@@ -11,20 +11,20 @@ public class MenuItemRepository
         _db = db;
     }
 
-    public async Task<int> AddMenuItem(Db.Models.MenuItem menuItem)
+    public async Task<int> AddMenuItem(Models.MenuItem menuItem)
     {
         _db.MenuItem.Add(menuItem);
         await _db.SaveChangesAsync();
         return menuItem.Id;
     }
 
-    public async Task DeleteMenuItem(Db.Models.MenuItem menuItem)
+    public async Task DeleteMenuItem(Models.MenuItem menuItem)
     {
         _db.MenuItem.Remove(menuItem);
         await _db.SaveChangesAsync();
     }
 
-    public async Task<Db.Models.MenuItem> UpdateMenuItem(Db.Models.MenuItem newMenuItem)
+    public async Task<Models.MenuItem> UpdateMenuItem(Models.MenuItem newMenuItem)
     {
         _db.MenuItem.Update(newMenuItem);
         await _db.SaveChangesAsync();

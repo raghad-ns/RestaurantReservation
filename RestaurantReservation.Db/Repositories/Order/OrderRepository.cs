@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db;
 
-namespace RestaurantReservation.Order;
+namespace RestaurantReservation.Db.Repositories.Order;
 
 public class OrderRepository
 {
@@ -12,31 +12,31 @@ public class OrderRepository
         _db = db;
     }
 
-    public async Task<int> AddOrder(Db.Models.Order order)
+    public async Task<int> AddOrder(Models.Order order)
     {
         _db.Order.Add(order);
         await _db.SaveChangesAsync();
         return order.Id;
     }
 
-    public async Task DeleteOrder(Db.Models.Order order)
+    public async Task DeleteOrder(Models.Order order)
     {
         _db.Order.Remove(order);
         await _db.SaveChangesAsync();
     }
 
-    public async Task<Db.Models.Order> UpdateOrder(Db.Models.Order newOrder)
+    public async Task<Models.Order> UpdateOrder(Models.Order newOrder)
     {
         _db.Order.Update(newOrder);
         await _db.SaveChangesAsync();
         return newOrder;
     }
 
-    public Task<List<Db.Models.Order>> ListOrdersAndMenuItems(int reservationId)
+    public Task<List<Models.Order>> ListOrdersAndMenuItems(int reservationId)
     {
         return _db.Order
-            .Include(order => order.Items)
-                .ThenInclude(orderItem => orderItem.Item)
+            .Include(order => order.OrderItems)
+                .ThenInclude(orderItem => orderItem.MenuItem)
             .Where(order => order.ReservationId == reservationId).ToListAsync();
     }
 }

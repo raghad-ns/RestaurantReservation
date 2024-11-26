@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Db;
 
-namespace RestaurantReservation.Customer;
+namespace RestaurantReservation.Db.Repositories.Customer;
 
 public class CustomerRepository
 {
@@ -19,20 +18,20 @@ public class CustomerRepository
         return customer.Id;
     }
 
-    public async Task DeleteCustomer(Db.Models.Customer customer)
+    public async Task DeleteCustomer(Models.Customer customer)
     {
         _db.Customer.Remove(customer);
         await _db.SaveChangesAsync();
     }
 
-    public async Task<Db.Models.Customer> UpdateCustomer(Db.Models.Customer newCustomer)
+    public async Task<Models.Customer> UpdateCustomer(Models.Customer newCustomer)
     {
         _db.Customer.Update(newCustomer); // Will add new record if customer doesn't exist
         await _db.SaveChangesAsync();
         return newCustomer;
     }
 
-    public Task<List<Db.Models.Customer>> GetCustomersHaveReservationWithPartySizeGreaterThan(int partySize)
+    public Task<List<Models.Customer>> GetCustomersHaveReservationWithPartySizeGreaterThan(int partySize)
     {
         return _db.Customer.
             FromSqlInterpolated($"EXEC FindCustomersHaveReservationWithPartySizeGreaterThan {partySize}")

@@ -1,6 +1,6 @@
 ﻿using RestaurantReservation.Db;
 
-namespace RestaurantReservation.Restaurant;
+namespace RestaurantReservation.Db.Repositories.Restaurant;
 
 public class RestaurantRepository
 {
@@ -11,20 +11,20 @@ public class RestaurantRepository
         _db = db;
     }
 
-    public async Task<int> AddRestaurant(Db.Models.Restaurant restaurant)
+    public async Task<int> AddRestaurant(Models.Restaurant restaurant)
     {
         _db.Restaurant.Add(restaurant);
         await _db.SaveChangesAsync();
         return restaurant.Id;
     }
 
-    public async Task DeleteRestaurant(Db.Models.Restaurant restaurant)
+    public async Task DeleteRestaurant(Models.Restaurant restaurant)
     {
         _db.Restaurant.Remove(restaurant);
         await _db.SaveChangesAsync();
     }
 
-    public async Task<Db.Models.Restaurant> UpdateRestaurant(int restaurantId, Db.Models.Restaurant newRestaurant)
+    public async Task<Models.Restaurant> UpdateRestaurant(int restaurantId, Models.Restaurant newRestaurant)
     {
         _db.Restaurant.Update(newRestaurant);
         await _db.SaveChangesAsync();
