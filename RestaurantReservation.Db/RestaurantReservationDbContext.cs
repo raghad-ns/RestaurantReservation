@@ -7,12 +7,12 @@ public class RestaurantReservationDbContext : DbContext
 {
     private readonly string _connectionString;
 
-    public RestaurantReservationDbContext( string  connString)
+    public RestaurantReservationDbContext(string connString) 
     {
         _connectionString = connString;
     }
 
-    public DbSet<Models.Customer> Customer { get; set; }
+public DbSet<Models.Customer> Customer { get; set; }
     public DbSet<Models.Employee> Employee { get; set; }
     public DbSet<Models.MenuItem> MenuItem { get; set; }
     public DbSet<Models.Order> Order { get; set; }
@@ -40,6 +40,80 @@ public class RestaurantReservationDbContext : DbContext
         {
             entity.ToView("EmployeeRestaurantDetails");
             entity.HasNoKey();
+        });
+
+        modelBuilder.Entity<Customer>(entity =>
+        {
+            entity
+                .HasMany(e => e.Reservations)
+                .WithOne(e => e.Customer)
+                .HasForeignKey(e => e.CustomerId);
+        });
+
+        modelBuilder.Entity<Employee>(entity =>
+        {
+            entity
+                .HasMany(e => e.Orders)
+                .WithOne(e => e.Employee)
+                .HasForeignKey(e => e.EmployeeId)
+                .IsRequired();
+        });
+
+        modelBuilder.Entity<MenuItem>(entity =>
+        {
+            entity
+                .HasMany(e => e.OrderItems)
+                .WithOne(e => e.MenuItem)
+                .HasForeignKey(e => e.MenuItemId)
+                .IsRequired();
+        });
+
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity
+                .HasMany(e => e.OrderItems)
+                .WithOne(e => e.Order)
+                .HasForeignKey(e => e.OrderId)
+                .IsRequired();
+        });
+
+        modelBuilder.Entity<Reservation>(entity =>
+        {
+            entity
+                .HasMany(e => e.Orders)
+                .WithOne(e => e.Reservation)
+                .HasForeignKey(e => e.ReservationId)
+                .IsRequired();
+        });
+
+        modelBuilder.Entity<Restaurant>(entity =>
+        {
+            entity
+                .HasMany(e => e.Tables)
+                .WithOne(e => e.Restaurant)
+                .HasForeignKey(e => e.RestaurantId)
+                .IsRequired();
+
+            entity
+                .HasMany(e => e.Employees)
+                .WithOne(e => e.Restaurant)
+                .HasForeignKey(e => e.RestaurantId)
+                .IsRequired();
+
+            entity
+                .HasMany(e => e.MenuItems)
+                .WithOne(e => e.Restaurant)
+                .HasForeignKey(e => e.RestaurantId)
+                .IsRequired();
+        });
+
+        modelBuilder.Entity<Table>(entity =>
+        {
+            entity
+                .HasMany(e => e.Reservations)
+                .WithOne(e => e.Table)
+                .HasForeignKey(e => e.TableId)
+                .IsRequired();
         });
     }
 

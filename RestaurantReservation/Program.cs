@@ -16,6 +16,7 @@ public class Program
     static async Task Main(string[] args)
     {
         var databaseOptions = ConfigureApp(args);
+        Console.WriteLine(databaseOptions.ConnectionString);
 
         var repo = new OrderItemRepository(new RestaurantReservationDbContext(databaseOptions.ConnectionString));
         var items = await repo.ListOrderedMenuItemsForReservation(1);
@@ -58,6 +59,10 @@ public class Program
         // Create a scope and resolve the configured options
         using var scope = serviceProvider.CreateScope();
         var databaseOptions = scope.ServiceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+
+
+        //builder.Services.AddDbContext<RestaurantReservationDbContext>((options => 
+        //    options.UseSqlServer(databaseOptions.ConnectionString)));
 
         return databaseOptions;
     }
