@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db;
 
@@ -16,15 +15,15 @@ public class RestaurantReservationDbContext : DbContext
     //{
     //}
 
-    public DbSet<Customer> Customer { get; set; }
-    public DbSet<Employee> Employee { get; set; }
-    public DbSet<MenuItem> MenuItem { get; set; }
-    public DbSet<Order> Order { get; set; }
-    public DbSet<OrderItem> OrderItem { get; set; }
-    public DbSet<Reservation> Reservation { get; set; }
-    public DbSet<Restaurant> Restaurant { get; set; }
-    public DbSet<Table> Table { get; set; }
-    public DbSet<EmployeeRestaurantDetails> EmployeeRestaurantDetails { get; set; }
+    public DbSet<Customer.Models.Customer> Customer { get; set; }
+    public DbSet<Employee.Models.Employee> Employee { get; set; }
+    public DbSet<MenuItem.Models.MenuItem> MenuItem { get; set; }
+    public DbSet<Order.Models.Order> Order { get; set; }
+    public DbSet<OrderItem.Models.OrderItem> OrderItem { get; set; }
+    public DbSet<Reservation.Models.Reservation> Reservation { get; set; }
+    public DbSet<Restaurant.Models.Restaurant> Restaurant { get; set; }
+    public DbSet<Table.Models.Table> Table { get; set; }
+    public DbSet<EmployeeRestaurantDetails.Models.EmployeeRestaurantDetails> EmployeeRestaurantDetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -40,13 +39,13 @@ public class RestaurantReservationDbContext : DbContext
         .HasName("RestaurantRevenue")
         .HasSchema("dbo");
 
-        modelBuilder.Entity<EmployeeRestaurantDetails>(entity =>
+        modelBuilder.Entity<EmployeeRestaurantDetails.Models.EmployeeRestaurantDetails>(entity =>
         {
             entity.ToView("EmployeeRestaurantDetails");
             entity.HasNoKey();
         });
 
-        modelBuilder.Entity<Customer>(entity =>
+        modelBuilder.Entity<Customer.Models.Customer>(entity =>
         {
             entity
                 .HasMany(e => e.Reservations)
@@ -54,7 +53,7 @@ public class RestaurantReservationDbContext : DbContext
                 .HasForeignKey(e => e.CustomerId);
         });
 
-        modelBuilder.Entity<Employee>(entity =>
+        modelBuilder.Entity<Employee.Models.Employee>(entity =>
         {
             entity
                 .HasMany(e => e.Orders)
@@ -63,7 +62,7 @@ public class RestaurantReservationDbContext : DbContext
                 .IsRequired();
         });
 
-        modelBuilder.Entity<MenuItem>(entity =>
+        modelBuilder.Entity<MenuItem.Models.MenuItem>(entity =>
         {
             entity
                 .HasMany(e => e.OrderItems)
@@ -72,7 +71,7 @@ public class RestaurantReservationDbContext : DbContext
                 .IsRequired();
         });
 
-        modelBuilder.Entity<Order>(entity =>
+        modelBuilder.Entity<Order.Models.Order>(entity =>
         {
             entity
                 .HasMany(e => e.OrderItems)
@@ -81,7 +80,7 @@ public class RestaurantReservationDbContext : DbContext
                 .IsRequired();
         });
 
-        modelBuilder.Entity<Reservation>(entity =>
+        modelBuilder.Entity<Reservation.Models.Reservation>(entity =>
         {
             entity
                 .HasMany(e => e.Orders)
@@ -90,7 +89,7 @@ public class RestaurantReservationDbContext : DbContext
                 .IsRequired();
         });
 
-        modelBuilder.Entity<Restaurant>(entity =>
+        modelBuilder.Entity<Restaurant.Models.Restaurant>(entity =>
         {
             entity
                 .HasMany(e => e.Tables)
@@ -111,7 +110,7 @@ public class RestaurantReservationDbContext : DbContext
                 .IsRequired();
         });
 
-        modelBuilder.Entity<Table>(entity =>
+        modelBuilder.Entity<Table.Models.Table>(entity =>
         {
             entity
                 .HasMany(e => e.Reservations)
