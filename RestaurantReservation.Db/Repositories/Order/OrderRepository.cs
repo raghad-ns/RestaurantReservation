@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Db;
 
 namespace RestaurantReservation.Db.Repositories.Order;
 
-public class OrderRepository
+public class OrderRepository: IOrderRepository
 {
     private readonly RestaurantReservationDbContext _db;
 

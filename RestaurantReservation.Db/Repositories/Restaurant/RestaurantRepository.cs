@@ -1,8 +1,6 @@
-﻿using RestaurantReservation.Db;
+﻿namespace RestaurantReservation.Db.Repositories.Restaurant;
 
-namespace RestaurantReservation.Db.Repositories.Restaurant;
-
-public class RestaurantRepository
+public class RestaurantRepository: IRestaurantRepository
 {
     private readonly RestaurantReservationDbContext _db;
 
@@ -24,7 +22,7 @@ public class RestaurantRepository
         await _db.SaveChangesAsync();
     }
 
-    public async Task<Models.Restaurant> UpdateRestaurant(int restaurantId, Models.Restaurant newRestaurant)
+    public async Task<Models.Restaurant> UpdateRestaurant(Models.Restaurant newRestaurant)
     {
         _db.Restaurant.Update(newRestaurant);
         await _db.SaveChangesAsync();

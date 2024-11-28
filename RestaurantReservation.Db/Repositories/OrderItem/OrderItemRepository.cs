@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantReservation.Db;
 
 namespace RestaurantReservation.Db.Repositories.OrderItem;
 
-public class OrderItemRepository
+public class OrderItemRepository: IOrderItemItemRepository
 {
     private readonly RestaurantReservationDbContext _db;
 
@@ -41,9 +40,11 @@ public class OrderItemRepository
 
     public Task<List<Models.MenuItem>> ListOrderedMenuItemsForReservation(int reservationId)
     {
+        return _db.MenuItem.ToListAsync();
         return _db.OrderItem
             .Include(orderItem => orderItem.Order)
             .Where(orderItem => orderItem.Order.ReservationId == reservationId)
-            .Include(orderItem => orderItem.MenuItem).Select(orderItem => orderItem.MenuItem).ToListAsync();
+            .Include(orderItem => orderItem.MenuItem).Select(orderItem => orderItem.MenuItem)
+            .ToListAsync();
     }
 }

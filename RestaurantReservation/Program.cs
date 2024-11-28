@@ -18,6 +18,7 @@ public class Program
         var databaseOptions = ConfigureApp(args);
         Console.WriteLine(databaseOptions.ConnectionString);
 
+        //var repo = new OrderItemRepository(new RestaurantReservationDbContext(new DbContextOptions<RestaurantReservationDbContext>()));
         var repo = new OrderItemRepository(new RestaurantReservationDbContext(databaseOptions.ConnectionString));
         var items = await repo.ListOrderedMenuItemsForReservation(1);
         foreach (var item in items)
@@ -26,12 +27,14 @@ public class Program
         }
 
         // Calling the DB Function
+        //var revenue = await (new RestaurantReservationDbContext(new DbContextOptions<RestaurantReservationDbContext>())).Order
         var revenue = await (new RestaurantReservationDbContext(databaseOptions.ConnectionString)).Order
             .Where(o => o.Reservation.RestaurantId == 1)
             .Select(o => RestaurantReservationDbContext.RestaurantRevenue(1))
             .FirstOrDefaultAsync();
         Console.WriteLine(revenue);
 
+        //var customerRepo = new CustomerRepository(new RestaurantReservationDbContext(new DbContextOptions<RestaurantReservationDbContext>()));
         var customerRepo = new CustomerRepository(new RestaurantReservationDbContext(databaseOptions.ConnectionString));
         var customers = await customerRepo.GetCustomersHaveReservationWithPartySizeGreaterThan(1);
         foreach (var customer in customers)
@@ -61,7 +64,7 @@ public class Program
         var databaseOptions = scope.ServiceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
 
 
-        //builder.Services.AddDbContext<RestaurantReservationDbContext>((options => 
+        //builder.Services.AddDbContext<RestaurantReservationDbContext>((options =>
         //    options.UseSqlServer(databaseOptions.ConnectionString)));
 
         return databaseOptions;

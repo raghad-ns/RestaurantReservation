@@ -1,8 +1,6 @@
-﻿using RestaurantReservation.Db;
+﻿namespace RestaurantReservation.Db.Repositories.Table;
 
-namespace RestaurantReservation.Db.Repositories.Table;
-
-public class TableRepository
+public class TableRepository: ITableRepository
 {
     private readonly RestaurantReservationDbContext _db;
 

@@ -4,7 +4,7 @@ using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories.Employee;
 
-public class EmployeeRepository
+public class EmployeeRepository: IEmployeeRepository
 {
     private readonly RestaurantReservationDbContext _db;
 

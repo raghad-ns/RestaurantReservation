@@ -2,7 +2,7 @@
 
 namespace RestaurantReservation.Db.Repositories.Customer;
 
-public class CustomerRepository
+public class CustomerRepository: ICustomerRepository
 {
     private readonly RestaurantReservationDbContext _db;
 

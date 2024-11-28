@@ -7,20 +7,24 @@ public class RestaurantReservationDbContext : DbContext
 {
     private readonly string _connectionString;
 
-    public RestaurantReservationDbContext(string connString) 
+    public RestaurantReservationDbContext(string connectionString)
     {
-        _connectionString = connString;
+        _connectionString = connectionString;
     }
+    //public RestaurantReservationDbContext(DbContextOptions<RestaurantReservationDbContext> options)
+    //    : base(options)
+    //{
+    //}
 
-public DbSet<Models.Customer> Customer { get; set; }
-    public DbSet<Models.Employee> Employee { get; set; }
-    public DbSet<Models.MenuItem> MenuItem { get; set; }
-    public DbSet<Models.Order> Order { get; set; }
-    public DbSet<Models.OrderItem> OrderItem { get; set; }
-    public DbSet<Models.Reservation> Reservation { get; set; }
-    public DbSet<Models.Restaurant> Restaurant { get; set; }
-    public DbSet<Models.Table> Table { get; set; }
-    public DbSet<Models.EmployeeRestaurantDetails> EmployeeRestaurantDetails { get; set; }
+    public DbSet<Customer> Customer { get; set; }
+    public DbSet<Employee> Employee { get; set; }
+    public DbSet<MenuItem> MenuItem { get; set; }
+    public DbSet<Order> Order { get; set; }
+    public DbSet<OrderItem> OrderItem { get; set; }
+    public DbSet<Reservation> Reservation { get; set; }
+    public DbSet<Restaurant> Restaurant { get; set; }
+    public DbSet<Table> Table { get; set; }
+    public DbSet<EmployeeRestaurantDetails> EmployeeRestaurantDetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
